@@ -61,10 +61,10 @@ drone.on('error', error => {
 // Potato-themed names generator
 function getRandomPotatoName() {
   const potatoes = [
-    "Baked Potato", "Mashed Potato", "Sweet Potato", "French Fry",
-    "Potato Chip", "Tater Tot", "Loaded Potato", "Potato Wedge",
-    "Crispy Potato", "Hash Brown", "Duchess Potato", "Potato Salad",
-    "Potato Pancake", "Scalloped Potato", "Roasted Potato", "Potato Skins"
+    "🥔Baked Potato🥔", "🥔Mashed Potato🥔", "🥔Sweet Potato🥔", "🥔French Fry🥔",
+    "🥔Potato Chip🥔", "🥔Tater Tot🥔", "🥔Loaded Potato🥔", "🥔Potato Wedge🥔",
+    "🥔Crispy Potato🥔", "🥔Hash Brown🥔", "🥔Duchess Potato🥔", "🥔Potato Salad🥔",
+    "🥔Potato Pancake🥔", "🥔Scalloped Spud🥔", "🥔Roasted Potato🥔", "🥔Potato Skins🥔"
   ];
   return potatoes[Math.floor(Math.random() * potatoes.length)];
 }
