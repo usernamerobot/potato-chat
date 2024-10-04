@@ -4,7 +4,7 @@ const CLIENT_ID = 'JLiWGFp2LQ9CiqAt';
 
 const drone = new ScaleDrone(CLIENT_ID, {
   data: { // Will be sent out as clientData via events
-    name: getRandomName(),
+    name: getRandomPotatoName(), // Use potato-themed names
     color: getRandomColor(),
   },
 });
@@ -35,7 +35,7 @@ drone.on('open', error => {
     updateMembersDOM();
   });
 
-  room.on('member_leave', ({id}) => {
+  room.on('member_leave', ({ id }) => {
     const index = members.findIndex(member => member.id === id);
     members.splice(index, 1);
     updateMembersDOM();
@@ -58,14 +58,15 @@ drone.on('error', error => {
   console.error(error);
 });
 
-function getRandomName() {
-  const adjs = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring", "winter", "patient", "twilight", "dawn", "crimson", "wispy", "weathered", "blue", "billowing", "broken", "cold", "damp", "falling", "frosty", "green", "long", "late", "lingering", "bold", "little", "morning", "muddy", "old", "red", "rough", "still", "small", "sparkling", "throbbing", "shy", "wandering", "withered", "wild", "black", "young", "holy", "solitary", "fragrant", "aged", "snowy", "proud", "floral", "restless", "divine", "polished", "ancient", "purple", "lively", "nameless"];
-  const nouns = ["waterfall", "river", "breeze", "moon", "rain", "wind", "sea", "morning", "snow", "lake", "sunset", "pine", "shadow", "leaf", "dawn", "glitter", "forest", "hill", "cloud", "meadow", "sun", "glade", "bird", "brook", "butterfly", "bush", "dew", "dust", "field", "fire", "flower", "firefly", "feather", "grass", "haze", "mountain", "night", "pond", "darkness", "snowflake", "silence", "sound", "sky", "shape", "surf", "thunder", "violet", "water", "wildflower", "wave", "water", "resonance", "sun", "wood", "dream", "cherry", "tree", "fog", "frost", "voice", "paper", "frog", "smoke", "star"];
-  return (
-    adjs[Math.floor(Math.random() * adjs.length)] +
-    "_" +
-    nouns[Math.floor(Math.random() * nouns.length)]
-  );
+// Potato-themed names generator
+function getRandomPotatoName() {
+  const potatoes = [
+    "Baked Potato", "Mashed Potato", "Sweet Potato", "French Fry",
+    "Potato Chip", "Tater Tot", "Loaded Potato", "Potato Wedge",
+    "Crispy Potato", "Hash Brown", "Duchess Potato", "Potato Salad",
+    "Potato Pancake", "Scalloped Potato", "Roasted Potato", "Potato Skins"
+  ];
+  return potatoes[Math.floor(Math.random() * potatoes.length)];
 }
 
 function getRandomColor() {
@@ -102,6 +103,19 @@ function createMemberElement(member) {
   el.appendChild(document.createTextNode(name));
   el.className = 'member';
   el.style.color = color;
+  el.style.fontWeight = 'bold';
+  el.style.padding = '5px';
+  el.style.borderRadius = '5px';
+  el.style.transition = 'background-color 0.3s';
+  
+  el.addEventListener('mouseover', () => {
+    el.style.backgroundColor = '#f0e68c'; // Highlight on hover
+  });
+  
+  el.addEventListener('mouseout', () => {
+    el.style.backgroundColor = ''; // Remove highlight
+  });
+  
   return el;
 }
 
@@ -118,6 +132,18 @@ function createMessageElement(text, member) {
   el.appendChild(createMemberElement(member));
   el.appendChild(document.createTextNode(text));
   el.className = 'message';
+  el.style.padding = '10px';
+  el.style.borderRadius = '5px';
+  el.style.backgroundColor = '#e1f7d5'; // Light green background for messages
+  el.style.marginBottom = '10px';
+  el.style.transition = 'transform 0.2s';
+  
+  // Animation on new message
+  el.style.transform = 'translateY(10px)';
+  setTimeout(() => {
+    el.style.transform = 'translateY(0)';
+  }, 100);
+  
   return el;
 }
 
