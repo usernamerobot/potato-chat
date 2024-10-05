@@ -6,13 +6,12 @@ const drone = new ScaleDrone(CLIENT_ID, {
   data: { // Will be sent out as clientData via events
     name: getRandomPotatoName(), // Use potato-themed names
     color: getRandomColor(),
-    avatar: getRandomPotatoAvatar(), // Random potato profile picture
+    avatar: getRandomPotatoAvatar(), // Random potato avatar
   },
 });
 
 let members = [];
 
-// Connection handling and room subscription
 drone.on('open', error => {
   if (error) {
     return console.error(error);
@@ -71,7 +70,6 @@ function getRandomPotatoName() {
   return potatoes[Math.floor(Math.random() * potatoes.length)];
 }
 
-// Random potato profile picture generator
 function getRandomPotatoAvatar() {
   const avatars = [
     'https://usernamerobot.github.io/funnyhatpotato-Photoroom.jpg',
@@ -81,7 +79,6 @@ function getRandomPotatoAvatar() {
   ];
   return avatars[Math.floor(Math.random() * avatars.length)];
 }
-
 
 function getRandomColor() {
   return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
@@ -114,24 +111,19 @@ function sendMessage() {
 function createMemberElement(member) {
   const { name, color, avatar } = member.clientData;
   const el = document.createElement('div');
-  const img = document.createElement('img');
-  img.src = avatar;
-  img.style.width = '40px';
-  img.style.height = '40px';
-  img.style.borderRadius = '50%'; // Make the image rounded
-  img.style.marginRight = '10px';
   
-  const nameEl = document.createElement('span');
-  nameEl.appendChild(document.createTextNode(name));
-  nameEl.style.color = color;
-  nameEl.style.fontWeight = 'bold';
-
-  el.appendChild(img);
-  el.appendChild(nameEl);
+  // Create image element
+  const img = document.createElement('img');
+  img.src = avatar; // Set the avatar image
+  img.alt = name; // Set alt text
+  el.appendChild(img); // Add image to member element
+  
+  el.appendChild(document.createTextNode(name));
   el.className = 'member';
-  el.style.display = 'flex';
-  el.style.alignItems = 'center';
+  el.style.color = color;
+  el.style.fontWeight = 'bold';
   el.style.padding = '5px';
+  el.style.borderRadius = '5px';
   el.style.transition = 'background-color 0.3s';
   
   el.addEventListener('mouseover', () => {
@@ -146,38 +138,18 @@ function createMemberElement(member) {
 }
 
 function updateMembersDOM() {
-  DOM.membersCount.innerText = `${members.length} users in room:`;
-  DOM.membersList.innerHTML = '';
-  members.forEach(member =>
-    DOM.membersList.appendChild(createMemberElement(member))
-  );
-}
-
-function createMessageElement(text, member) {
-  const el = document.createElement('div');
-  el.appendChild(createMemberElement(member));
-  el.appendChild(document.createTextNode(text));
-  el.className = 'message';
-  el.style.padding = '10px';
-  el.style.borderRadius = '5px';
-  el.style.backgroundColor = '#e1f7d5'; // Light green background for messages
-  el.style.marginBottom = '10px';
-  el.style.transition = 'transform 0.2s';
-  
-  // Animation on new message
-  el.style.transform = 'translateY(10px)';
-  setTimeout(() => {
-    el.style.transform = 'translateY(0)';
-  }, 100);
-  
-  return el;
+  DOM.membersList.innerHTML = 'Active Members: ';
+  members.forEach(member => {
+    const el = createMemberElement(member);
+    DOM.membersList.appendChild(el);
+  });
+  DOM.membersCount.innerHTML = members.length;
 }
 
 function addMessageToListDOM(text, member) {
-  const el = DOM.messages;
-  const wasTop = el.scrollTop === el.scrollHeight - el.clientHeight;
-  el.appendChild(createMessageElement(text, member));
-  if (wasTop) {
-    el.scrollTop = el.scrollHeight - el.clientHeight;
-  }
+  const el = document.createElement('div');
+  el.className = 'message';
+  el.innerHTML = `<strong>${member.clientData.name}</strong>: ${text}`;
+  DOM.messages.appendChild(el);
+  DOM.messages.scrollTop = DOM.messages.scrollHeight; // Auto scroll
 }
