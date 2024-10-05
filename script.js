@@ -1,11 +1,19 @@
-// PS! Replace this with your own channel ID
-// If you use this channel ID your app will stop working in the future
-const CLIENT_ID = 'JLiWGFp2LQ9CiqAt';
+const CLIENT_ID = 'JLiWGFp2LQ9CiqAt'; // Replace with your own CLIENT_ID
 
+const potatoImages = [
+  'https://yourwebsite.com/potato1.png',
+  'https://yourwebsite.com/potato2.png',
+  'https://yourwebsite.com/potato3.png',
+  'https://yourwebsite.com/potato4.png',
+  'https://yourwebsite.com/potato5.png'
+];
+
+// Scaledrone connection with random potato name and random potato image
 const drone = new ScaleDrone(CLIENT_ID, {
-  data: { // Will be sent out as clientData via events
-    name: getRandomPotatoName(), // Use potato-themed names
+  data: {
+    name: getRandomPotatoName(), // Random potato-themed name
     color: getRandomColor(),
+    image: getRandomPotatoImage() // Random potato image for each user
   },
 });
 
@@ -44,8 +52,6 @@ drone.on('open', error => {
   room.on('data', (text, member) => {
     if (member) {
       addMessageToListDOM(text, member);
-    } else {
-      // Message is from server
     }
   });
 });
@@ -58,7 +64,7 @@ drone.on('error', error => {
   console.error(error);
 });
 
-// Potato-themed names generator
+// Random potato-themed names generator
 function getRandomPotatoName() {
   const potatoes = [
     "🥔Baked Potato🥔", "🥔Mashed Potato🥔", "🥔Sweet Potato🥔", "🥔French Fry🥔",
@@ -69,8 +75,14 @@ function getRandomPotatoName() {
   return potatoes[Math.floor(Math.random() * potatoes.length)];
 }
 
+// Random color generator
 function getRandomColor() {
   return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
+}
+
+// Random potato image selector
+function getRandomPotatoImage() {
+  return potatoImages[Math.floor(Math.random() * potatoImages.length)];
 }
 
 //------------- DOM STUFF
@@ -98,8 +110,18 @@ function sendMessage() {
 }
 
 function createMemberElement(member) {
-  const { name, color } = member.clientData;
+  const { name, color, image } = member.clientData;
   const el = document.createElement('div');
+  const img = document.createElement('img');
+  
+  img.src = image;
+  img.alt = 'Potato Image';
+  img.style.width = '30px';
+  img.style.height = '30px';
+  img.style.borderRadius = '50%';
+  img.style.marginRight = '10px';
+  
+  el.appendChild(img);
   el.appendChild(document.createTextNode(name));
   el.className = 'member';
   el.style.color = color;
