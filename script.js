@@ -1,10 +1,10 @@
 const CLIENT_ID = 'JLiWGFp2LQ9CiqAt'; // Replace with your own CLIENT_ID
 
 const potatoImages = [
-  'funnyhatpotato-Photoroom.jpg'
-'shadow potato-Photoroom.png'
-'purpulepotato-Photoroom.jpg'
-'dirty potato-Photoroom.jpg'
+  'https://usernamerobot.github.io/funnyhatpotato-Photoroom.jpg'
+'https://usernamerobot.github.io/shadow potato-Photoroom.png'
+'https://usernamerobot.github.io/purpulepotato-Photoroom.jpg'
+'https://usernamerobot.github.io/dirty potato-Photoroom.jpg'
 
 ];
 
