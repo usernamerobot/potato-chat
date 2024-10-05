@@ -75,12 +75,13 @@ function getRandomPotatoName() {
 function getRandomPotatoAvatar() {
   const avatars = [
     'https://usernamerobot.github.io/funnyhatpotato-Photoroom.jpg',
-    'https://usernamerobot.github.io/shadow potato-Photoroom.png',
+    'https://usernamerobot.github.io/shadow%20potato-Photoroom.png', // Fixed the space
     'https://usernamerobot.github.io/purpulepotato-Photoroom.jpg',
-    'https://usernamerobot.github.io/dirty potato-Photoroom.jpg'
+    'https://usernamerobot.github.io/dirty%20potato-Photoroom.jpg' // Fixed the space
   ];
   return avatars[Math.floor(Math.random() * avatars.length)];
 }
+
 
 function getRandomColor() {
   return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
