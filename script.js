@@ -1,24 +1,18 @@
-const CLIENT_ID = 'JLiWGFp2LQ9CiqAt'; // Replace with your own CLIENT_ID
+// PS! Replace this with your own channel ID
+// If you use this channel ID your app will stop working in the future
+const CLIENT_ID = 'JLiWGFp2LQ9CiqAt';
 
-const potatoImages = [
-  'https://usernamerobot.github.io/funnyhatpotato-Photoroom.jpg'
-'https://usernamerobot.github.io/shadow potato-Photoroom.png'
-'https://usernamerobot.github.io/purpulepotato-Photoroom.jpg'
-'https://usernamerobot.github.io/dirty potato-Photoroom.jpg'
-
-];
-
-// Scaledrone connection with random potato name and random potato image
 const drone = new ScaleDrone(CLIENT_ID, {
-  data: {
-    name: getRandomPotatoName(), // Random potato-themed name
+  data: { // Will be sent out as clientData via events
+    name: getRandomPotatoName(), // Use potato-themed names
     color: getRandomColor(),
-    image: getRandomPotatoImage() // Random potato image for each user
+    avatar: getRandomPotatoAvatar(), // Random potato profile picture
   },
 });
 
 let members = [];
 
+// Connection handling and room subscription
 drone.on('open', error => {
   if (error) {
     return console.error(error);
@@ -52,6 +46,8 @@ drone.on('open', error => {
   room.on('data', (text, member) => {
     if (member) {
       addMessageToListDOM(text, member);
+    } else {
+      // Message is from server
     }
   });
 });
@@ -64,7 +60,7 @@ drone.on('error', error => {
   console.error(error);
 });
 
-// Random potato-themed names generator
+// Potato-themed names generator
 function getRandomPotatoName() {
   const potatoes = [
     "🥔Baked Potato🥔", "🥔Mashed Potato🥔", "🥔Sweet Potato🥔", "🥔French Fry🥔",
@@ -75,14 +71,19 @@ function getRandomPotatoName() {
   return potatoes[Math.floor(Math.random() * potatoes.length)];
 }
 
-// Random color generator
-function getRandomColor() {
-  return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
+// Random potato profile picture generator
+function getRandomPotatoAvatar() {
+  const avatars = [
+    'https://usernamerobot.github.io/funnyhatpotato-Photoroom.jpg',
+    'https://usernamerobot.github.io/shadow potato-Photoroom.png',
+    'https://usernamerobot.github.io/purpulepotato-Photoroom.jpg',
+    'https://usernamerobot.github.io/dirty potato-Photoroom.jpg'
+  ];
+  return avatars[Math.floor(Math.random() * avatars.length)];
 }
 
-// Random potato image selector
-function getRandomPotatoImage() {
-  return potatoImages[Math.floor(Math.random() * potatoImages.length)];
+function getRandomColor() {
+  return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
 
 //------------- DOM STUFF
@@ -110,24 +111,26 @@ function sendMessage() {
 }
 
 function createMemberElement(member) {
-  const { name, color, image } = member.clientData;
+  const { name, color, avatar } = member.clientData;
   const el = document.createElement('div');
   const img = document.createElement('img');
-  
-  img.src = image;
-  img.alt = 'Potato Image';
-  img.style.width = '30px';
-  img.style.height = '30px';
-  img.style.borderRadius = '50%';
+  img.src = avatar;
+  img.style.width = '40px';
+  img.style.height = '40px';
+  img.style.borderRadius = '50%'; // Make the image rounded
   img.style.marginRight = '10px';
   
+  const nameEl = document.createElement('span');
+  nameEl.appendChild(document.createTextNode(name));
+  nameEl.style.color = color;
+  nameEl.style.fontWeight = 'bold';
+
   el.appendChild(img);
-  el.appendChild(document.createTextNode(name));
+  el.appendChild(nameEl);
   el.className = 'member';
-  el.style.color = color;
-  el.style.fontWeight = 'bold';
+  el.style.display = 'flex';
+  el.style.alignItems = 'center';
   el.style.padding = '5px';
-  el.style.borderRadius = '5px';
   el.style.transition = 'background-color 0.3s';
   
   el.addEventListener('mouseover', () => {
