@@ -52,6 +52,9 @@ drone.on('open', error => {
       addMessageToListDOM(text, member);
     }
   });
+  fetch('auth/' + drone.clientId)
+    .then(response => response.text())
+    .then(jwt => drone.authenticate(jwt));
 });
 
 drone.on('close', event => {
