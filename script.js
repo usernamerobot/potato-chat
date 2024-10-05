@@ -1,11 +1,11 @@
 const CLIENT_ID = 'JLiWGFp2LQ9CiqAt'; // Replace with your own CLIENT_ID
 
 const potatoImages = [
-  'https://yourwebsite.com/potato1.png',
-  'https://yourwebsite.com/potato2.png',
-  'https://yourwebsite.com/potato3.png',
-  'https://yourwebsite.com/potato4.png',
-  'https://yourwebsite.com/potato5.png'
+  'funnyhatpotato-Photoroom.jpg'
+'shadow potato-Photoroom.png'
+'purpulepotato-Photoroom.jpg'
+'dirty potato-Photoroom.jpg'
+
 ];
 
 // Scaledrone connection with random potato name and random potato image
