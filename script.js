@@ -45,8 +45,6 @@ drone.on('open', error => {
   room.on('data', (text, member) => {
     if (member) {
       addMessageToListDOM(text, member);
-    } else {
-      // Message is from server
     }
   });
 });
@@ -111,45 +109,36 @@ function sendMessage() {
 function createMemberElement(member) {
   const { name, color, avatar } = member.clientData;
   const el = document.createElement('div');
-  
+  el.className = 'member';
+
   // Create image element
   const img = document.createElement('img');
   img.src = avatar; // Set the avatar image
   img.alt = name; // Set alt text
+
   el.appendChild(img); // Add image to member element
-  
-  el.appendChild(document.createTextNode(name));
-  el.className = 'member';
+  el.appendChild(document.createTextNode(name)); // Add name next to image
   el.style.color = color;
-  el.style.fontWeight = 'bold';
-  el.style.padding = '5px';
-  el.style.borderRadius = '5px';
-  el.style.transition = 'background-color 0.3s';
-  
-  el.addEventListener('mouseover', () => {
-    el.style.backgroundColor = '#f0e68c'; // Highlight on hover
-  });
-  
-  el.addEventListener('mouseout', () => {
-    el.style.backgroundColor = ''; // Remove highlight
-  });
-  
+
   return el;
 }
 
 function updateMembersDOM() {
   DOM.membersList.innerHTML = 'Active Members: ';
   members.forEach(member => {
-    const el = createMemberElement(member);
-    DOM.membersList.appendChild(el);
+    DOM.membersList.appendChild(createMemberElement(member));
   });
-  DOM.membersCount.innerHTML = members.length;
+  DOM.membersCount.innerText = members.length;
 }
 
 function addMessageToListDOM(text, member) {
   const el = document.createElement('div');
   el.className = 'message';
-  el.innerHTML = `<strong>${member.clientData.name}</strong>: ${text}`;
+  el.innerHTML = `
+    <div class="member">
+      <img src="${member.clientData.avatar}" alt="${member.clientData.name}">
+      <span style="color: ${member.clientData.color}">${member.clientData.name}</span>
+    </div>: ${text}`;
   DOM.messages.appendChild(el);
   DOM.messages.scrollTop = DOM.messages.scrollHeight; // Auto scroll
 }
