@@ -46,9 +46,9 @@ drone.on('open', error => {
     updateMembersDOM();
   });
 
-  room.on('history_message', ({data}) => {
-    console.log(data);
-    addMessageToListDOM(data, members[0]);
+  room.on('history_message', (text, member) => {
+    // console.log(text);
+    addMessageToListDOM(text, member);
   });
 
   room.on('data', (text, member) => {
