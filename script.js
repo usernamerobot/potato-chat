@@ -20,8 +20,9 @@ drone.on('open', error => {
 
   const room = drone.subscribe(
     'observable-room',
+    {
     historyCount: 100 // ask for the 100 latest messages from history
-  );
+    });
   room.on('open', error => {
     if (error) {
       return console.error(error);
