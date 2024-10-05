@@ -18,7 +18,10 @@ drone.on('open', error => {
   }
   console.log('Successfully connected to Scaledrone');
 
-  const room = drone.subscribe('observable-room');
+  const room = drone.subscribe(
+    'observable-room',
+    historyCount: 100 // ask for the 100 latest messages from history
+  );
   room.on('open', error => {
     if (error) {
       return console.error(error);
@@ -52,9 +55,6 @@ drone.on('open', error => {
       addMessageToListDOM(text, member);
     }
   });
-  fetch('auth/' + drone.clientId)
-    .then(response => response.text())
-    .then(jwt => drone.authenticate(jwt));
 });
 
 drone.on('close', event => {
