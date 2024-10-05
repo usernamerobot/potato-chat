@@ -18,6 +18,7 @@
             background-size: cover;
             background-position: center;
             color: #4B3D2D; /* Dark potato-like color */
+            overflow: hidden;
         }
 
         .members-count,
@@ -29,6 +30,11 @@
             margin-bottom: 15px;
             background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .members-list {
+            animation: fadeIn 0.5s ease;
         }
 
         .messages {
@@ -45,19 +51,27 @@
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
             opacity: 0;
             animation: slideIn 0.5s forwards;
+            display: flex;
+            align-items: center;
         }
 
         .member {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             margin-right: 10px;
+            transition: transform 0.3s; /* Spin effect */
         }
 
         .member img {
-            width: 30px; /* Adjust size as needed */
-            height: 30px; /* Adjust size as needed */
+            width: 40px; /* Adjust size as needed */
+            height: 40px; /* Adjust size as needed */
             border-radius: 50%; /* Makes the image round */
             margin-right: 5px;
+            transition: transform 0.5s; /* Spin effect */
+        }
+
+        .member:hover img {
+            transform: rotate(360deg); /* Spin on hover */
         }
 
         .message-form {
