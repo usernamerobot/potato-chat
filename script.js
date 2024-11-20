@@ -80,9 +80,9 @@ function getRandomPotatoName() {
 function getRandomPotatoAvatar() {
   const avatars = [
     'https://usernamerobot.github.io/funnyhatpotato-Photoroom.jpg',
-    'https://usernamerobot.github.io/shadow%20potato-Photoroom.png', // Fixed the space
+    'https://usernamerobot.github.io/shadowpotato-Photoroom.png',
     'https://usernamerobot.github.io/purpulepotato-Photoroom.jpg',
-    'https://usernamerobot.github.io/dirty%20potato-Photoroom.jpg' // Fixed the space
+    'https://usernamerobot.github.io/dirtypotato-Photoroom.jpg'
   ];
   return avatars[Math.floor(Math.random() * avatars.length)];
 }
